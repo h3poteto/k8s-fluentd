@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fluentd-deployment
+  namespace: logger
+  labels:
+    app: fluentd
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: fluentd
+  template:
+    metadata:
+      labels:
+        app: fluentd
+    spec:
+      containers:
+        - name: fluentd
+          image: h3poteto/k8s-fluentd:latest
+          ports:
+            - name: tcp
+              containerPort: 24224
+              protocol: TCP
+            - name: udp
+              containerPort: 5140
+              protocol: UDP
+          lifecycle:
+            preStop:
+              exec:
+                command: ["echo", "stopping"]
