@@ -17,14 +17,11 @@ spec:
     spec:
       containers:
         - name: fluentd
-          image: fluent/fluentd:v1.2.2
+          image: h3poteto/k8s-fluentd:0.1.2
           ports:
             - name: tcp
               containerPort: 24224
               protocol: TCP
-            - name: udp
-              containerPort: 5140
-              protocol: UDP
           lifecycle:
             preStop:
               exec:
